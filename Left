@@ -1,0 +1,66 @@
+var FloatingAd_close508=0;
+var d = document;
+var ns=(navigator.appName.indexOf("Netscape") != -1 && navigator.userAgent.indexOf("Gecko") == -1);
+var iebody=(document.compatMode && document.compatMode != "BackCompat")? document.documentElement : document.body
+
+startX508=0;
+function MAX_getClientSize(w) {
+if (window.innerHeight >= 0) {
+        return window.innerWidth-w; }
+else if (document.documentElement && document.documentElement.clientWidth > 0) {
+        return document.documentElement.clientWidth-w; }
+else if (document.body.clientHeight > 0) {
+        return document.body.clientWidth-w;}
+else { return 900; }
+}
+function FloatingAd_ModiObj508(id){
+  // find obj
+	var obj = d.getElementById ? d.getElementById(id) : (d.all ? d.all[id] : d.layers[id]);
+	//NS	
+	if(d.layers) {
+		obj.style=obj;
+	}
+	//Define
+	obj.float_to =function(x,y) {
+		if (document.all||document.getElementById){
+                this.style.left = x+"px";
+                this.style.top = y+"px";
+		}
+	};
+
+	obj.x=startX508;
+	obj.y=startY508;
+	return obj;
+}
+function closebar_th508(){
+document.getElementById(FloatingAd_Layer508).style.visibility="hidden"
+}
+function floatingAdClose508(){
+	clearTimeout(FloatingAd_Timer508);
+	if(d.getElementById){
+		d.getElementById(FloatingAd_Layer508).style.display = "none";
+		d.getElementById(FloatingAd_Layer508).innerHTML="";
+	}
+	else if(d.all){
+		d.all[FloatingAd_Layer508].style.display = "none";
+		d.all[FloatingAd_Layer508].innerHTML="";
+	}
+	else{
+		d.layers[FloatingAd_Layer508].visibility="hide";
+	}
+	FloatingAd_close508=1;
+}
+function FloatingAd_Stay508(){
+	if(!FloatingAd_close508){
+		var  pageY508=document.all? iebody.scrollTop : pageYOffset
+		FloatingObj508.y += (pageY508 + startY508 - FloatingObj508.y)/8;
+		FloatingObj508.float_to(FloatingObj508.x,FloatingObj508.y);
+		setTimeout("FloatingAd_Stay508()",10);
+	}
+}
+function FloatingAd_Start508(){
+	FloatingObj508=FloatingAd_ModiObj508(FloatingAd_Layer508);
+	if(FloatingAd_Timeout508 !=0 ) FloatingAd_Timer508=setTimeout("floatingAdClose508()",FloatingAd_Timeout508);
+	FloatingAd_Stay508();
+}
+FloatingAd_Start508();
